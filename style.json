@@ -3181,6 +3181,6 @@
       }
     ],
     "sprite": "https://protomaps.github.io/basemaps-assets/sprites/v3/light",
-    "glyphs": "http://localhost:3000/font/{fontstack}/{range}.pbf"
+    "glyphs": "https://wipfli.github.io/maplibre-gl-devanagari-text/font/{fontstack}/{range}.pbf"
   }
   
