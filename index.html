@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.css' />
+    <script src="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        html, body, #map { height: 100%; }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+
+    async function run() {
+
+        maplibregl.setRTLTextPlugin(
+            'http://localhost:3000/dist/maplibre-gl-devanagari-text.js',
+            false
+        );
+
+        const map = new maplibregl.Map({
+            container: 'map',
+            style: 'style.json',
+            center: [24, 38],
+            zoom: 8,
+            hash: "map"
+        });
+    }
+
+    run();
+
+</script>
+</body>
+</html>
