@@ -1,2 +1,57 @@
 # maplibre-gl-devanagari-text
 Render Devanagari text with Harfbuzz in MapLibre GL JS through the RTL plugin hook
+
+## Usage
+
+You can use the MapLibre GL Devanagari Text plugin in the same way you use the mapbox-gl-rtl-text plugin:
+
+```html
+<div id="map"></div>
+<script>
+maplibregl.setRTLTextPlugin(
+    'https://wipfli.github.io/maplibre-gl-devanagari-text/dist/maplibre-gl-devanagari-text.js',
+    false
+);
+
+const map = new maplibregl.Map({
+    container: 'map',
+    style: 'style.json',
+    center: [80, 21],
+    zoom: 4,
+    hash: "map"
+});
+
+</script>
+```
+
+Note that this plugin only works with MapLibre GL JS up to version v3.6.1. A refactor of the plugin loading sequence might have introduced a bug.
+
+## Demo
+
+https://wipfli.github.io/maplibre-gl-devanagari-text/
+
+<a href="https://wipfli.github.io/maplibre-gl-devanagari-text/">
+<img src="screenshot.png" width=300 />
+</a>
+
+## Build
+
+```
+npm run ci
+npm run build-dev
+npx serve
+```
+
+## Limitations
+
+- Only works with the fonts provided in the `font` folder. They are copied from https://github.com/wipfli/positioned-glyph-font.
+- You cannot use the normal RTL plugin for Arabic and Hebrew when using the Devanagari plugin.
+- `text-field`s that use a `format` expression are not yet supported.
+
+## License
+
+- The code in this repo in general is licensed as MIT.
+- The harfbuzzjs files are copied from https://github.com/harfbuzz/harfbuzzjs and are published under the apache license:
+  - `src/hbjs.js`
+  - `src/hb.wasm` 
+- The font file `src/NotoSansDevanagari-Regular.ttf` is published under the [Open Font License](https://en.wikipedia.org/wiki/SIL_Open_Font_License).
