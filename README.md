@@ -24,7 +24,7 @@ const map = new maplibregl.Map({
 </script>
 ```
 
-Note that this plugin only works with MapLibre GL JS up to version v3.6.1. A refactor of the plugin loading sequence might have introduced a bug.
+Only works with MapLibre GL JS <= v3.6.1 (smaller than or equal 3.6.1).
 
 ## Demo
 
@@ -55,3 +55,4 @@ npx serve
   - `src/hbjs.js`
   - `src/hb.wasm` 
 - The font file `src/NotoSansDevanagari-Regular.ttf` is published under the [Open Font License](https://en.wikipedia.org/wiki/SIL_Open_Font_License).
+- The `src/encoding.csv` file is copied from https://github.com/wipfli/positioned-glyph-font and is licensed under the MIT license.
