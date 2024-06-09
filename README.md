@@ -24,8 +24,6 @@ const map = new maplibregl.Map({
 </script>
 ```
 
-Only works with MapLibre GL JS <= v3.6.1 (smaller than or equal 3.6.1).
-
 ## Demo
 
 https://wipfli.github.io/maplibre-gl-devanagari-text/
@@ -47,6 +45,7 @@ npx serve
 - Only works with the fonts provided in the `font` folder. They are copied from https://github.com/wipfli/positioned-glyph-font.
 - You cannot use the normal RTL plugin for Arabic and Hebrew when using the Devanagari plugin.
 - `text-field`s that use a `format` expression are not yet supported.
+- Only works with MapLibre GL JS <= v3.6.1 (smaller than or equal 3.6.1).
 
 ## License
 
