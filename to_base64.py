@@ -7,6 +7,9 @@ def convert_font_to_base64(font_path):
         base64_string = base64_encoded_data.decode('utf-8')
     return base64_string
 
-font_path = "src/NotoSansDevanagari-Regular.ttf"
+
+font_path = "src/NotoSansDevanagari-Regular-without-glyf.ttf"
+
 base64_font = convert_font_to_base64(font_path)
-print(base64_font)
+with open(f"{font_path}.base64.txt", 'w') as f:
+    f.write(base64_font)

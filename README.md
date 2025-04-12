@@ -40,6 +40,25 @@ npm run build-dev
 npx serve
 ```
 
+## Adding a Font
+
+The `glyf` tabel is not needed, so we can first remove it with these steps:
+
+```
+pip install fonttools
+ttx src/my-font.ttf
+sed -i '/<glyf>/,/<\/glyf>/d' src/my-font.ttx
+ttx src/my-font.ttx -o src/my-font-without-glyf.ttf
+```
+
+Turn .ttf to base64 encoded string by first editing the `font_path` in `to_base64.py` and then running:
+
+```
+python3 to_base64.py
+```
+
+This should generate a `src/my-font-without-glyf.ttf.base64.txt` file.
+
 ## Limitations
 
 - Only works with the fonts provided in the `font` folder. They are copied from https://github.com/wipfli/positioned-glyph-font.
