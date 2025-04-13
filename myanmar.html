@@ -32,16 +32,16 @@
         const map = new maplibregl.Map({
             container: "map",
             style: "https://demotiles.maplibre.org/style.json",
-            center: [77.2090, 28.6139],
-            zoom: 4,
+            center: [96.1708, 21.9033],
+            zoom: 6,
             hash: "map"
         });
 
         map.setTransformRequest((url, resourceType) => {
 
             // const fontName = "NotoSansKhmer-Regular-v1";
-            const fontName = "NotoSansDevanagari-Regular-v1";
-            // const fontName = "NotoSansMyanmar-Regular-v1";
+            // const fontName = "NotoSansDevanagari-Regular-v1";
+            const fontName = "NotoSansMyanmar-Regular-v1";
 
             if (resourceType === "Glyphs") {
                 const match = url.match(/(\d+)-(\d+)\.pbf$/);
@@ -63,11 +63,11 @@
                     "type": "Feature",
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [77.2090, 28.6139]
+                        "coordinates": [96.1708, 21.9033]
                     },
                     "properties": {
-                        "name:en": "New Delhi",
-                        "name": "नई दिल्ली"
+                        "name:en": "Mandalay",
+                        "name": "မန္တလေး"
                     }
                 }
             });

@@ -8,7 +8,7 @@ def convert_font_to_base64(font_path):
     return base64_string
 
 
-font_path = "src/NotoSansKhmer-Regular-without-glyf.ttf"
+font_path = "src/NotoSansMyanmar-Regular-without-glyf.ttf"
 
 base64_font = convert_font_to_base64(font_path)
 with open(f"{font_path}.base64.txt", 'w') as f:

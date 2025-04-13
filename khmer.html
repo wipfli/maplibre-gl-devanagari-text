@@ -39,6 +39,7 @@
 
             const fontName = "NotoSansKhmer-Regular-v1";
             // const fontName = "NotoSansDevanagari-Regular-v1";
+            // const fontName = "NotoSansMyanmar-Regular-v1";
 
             if (resourceType === "Glyphs") {
                 const match = url.match(/(\d+)-(\d+)\.pbf$/);
@@ -76,6 +77,7 @@
                     "text-field": [
                         "format",
                         ["get", "name"], {},
+                        "\n", {},
                         ["get", "name:en"], {}
                     ],
                     "text-size": 24

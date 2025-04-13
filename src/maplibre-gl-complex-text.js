@@ -7,6 +7,9 @@ import encodingCSVDevanagari from './NotoSansDevanagari-Regular-v1.csv';
 import base64FontKhmer from './NotoSansKhmer-Regular-without-glyf.ttf.base64.txt';
 import encodingCSVKhmer from './NotoSansKhmer-Regular-v1.csv';
 
+import base64FontMyanmar from './NotoSansMyanmar-Regular-without-glyf.ttf.base64.txt';
+import encodingCSVMyanmar from './NotoSansMyanmar-Regular-v1.csv';
+
 var hb = null;
 var fonts = {};
 var encodings = {};
@@ -43,6 +46,9 @@ async function prepare() {
 
     addFont('khmer', base64FontKhmer);
     addEncoding('khmer', encodingCSVKhmer);
+
+    addFont('myanmar', base64FontMyanmar);
+    addEncoding('myanmar', encodingCSVMyanmar);
 
     self.registerRTLTextPlugin({
         'applyArabicShaping': applyArabicShaping,
@@ -105,7 +111,7 @@ function encode(text, script) {
 }
 
 function breakStringByScript(input) {
-    const regex = /(\p{Script=Devanagari}+|\p{Script=Khmer}+|[^\p{Script=Devanagari}\p{Script=Khmer}]+)/gu;
+    const regex = /(\p{Script=Devanagari}+|\p{Script=Khmer}+|\p{Script=Myanmar}+|[^\p{Script=Devanagari}\p{Script=Khmer}\p{Script=Myanmar}]+)/gu;
     return input.match(regex);
 }
 
@@ -116,6 +122,11 @@ function isDevanagari(str) {
 
 function isKhmer(str) {
     const r = /^[\p{Script=Khmer}]+$/u;
+    return r.test(str);
+}
+
+function isMyanmar(str) {
+    const r = /^[\p{Script=Myanmar}]+$/u;
     return r.test(str);
 }
 
@@ -131,6 +142,9 @@ function applyArabicShaping(input) {
         }
         else if (isKhmer(part)) {
             result += encode(part, 'khmer');
+        }
+        else if (isMyanmar(part)) {
+            result += encode(part, 'myanmar');
         }
         else {
             result += part;
@@ -209,5 +223,6 @@ function processStyledBidirectionalText(text, styleIndices, lineBreakPoints) {
         startIndex = breakPoint;
     }
 
-    return result;
+    const withoutBreaks = result.filter(entry => entry[0] !== '\n');
+    return withoutBreaks;
 }

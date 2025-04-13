@@ -2,8 +2,9 @@
 Render complex text with Harfbuzz in MapLibre GL JS through the RTL plugin hook.
 
 Supported scripts include: 
-- Devanagari ([Demo](https://wipfli.github.io/maplibre-gl-complex-text/devanagari.html))
 - Khmer ([Demo](https://wipfli.github.io/maplibre-gl-complex-text/khmer.html))
+- Devanagari ([Demo](https://wipfli.github.io/maplibre-gl-complex-text/devanagari.html))
+- Myanmar ([Demo](https://wipfli.github.io/maplibre-gl-complex-text/myanmar.html))
 
 ## Usage
 
@@ -29,6 +30,7 @@ map.setTransformRequest((url, resourceType) => {
 
     const fontName = "NotoSansKhmer-Regular-v1";
     // const fontName = "NotoSansDevanagari-Regular-v1";
+    // const fontName = "NotoSansMyanmar-Regular-v1";
 
     if (resourceType === "Glyphs") {
         const match = url.match(/(\d+)-(\d+)\.pbf$/);
@@ -48,6 +50,14 @@ map.setTransformRequest((url, resourceType) => {
 
 ## Demos
 
+### Khmer
+
+https://wipfli.github.io/maplibre-gl-complex-text/khmer.html
+
+<a href="https://wipfli.github.io/maplibre-gl-complex-text/khmer.html">
+<img src="screenshot-khmer.png" width=350 />
+</a>
+
 ### Devanagari
 
 https://wipfli.github.io/maplibre-gl-complex-text/devanagari.html
@@ -56,12 +66,12 @@ https://wipfli.github.io/maplibre-gl-complex-text/devanagari.html
 <img src="screenshot-devanagari.png" width=350 />
 </a>
 
-### Khmer
+### Myanmar
 
-https://wipfli.github.io/maplibre-gl-complex-text/khmer.html
+https://wipfli.github.io/maplibre-gl-complex-text/myanmar.html
 
-<a href="https://wipfli.github.io/maplibre-gl-complex-text/khmer.html">
-<img src="screenshot-khmer.png" width=350 />
+<a href="https://wipfli.github.io/maplibre-gl-complex-text/myanmar.html">
+<img src="screenshot-myanmar.png" width=350 />
 </a>
 
 ## Build
