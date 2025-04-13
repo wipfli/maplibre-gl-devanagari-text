@@ -1,15 +1,15 @@
-# maplibre-gl-devanagari-text
-Render Devanagari text with Harfbuzz in MapLibre GL JS through the RTL plugin hook
+# maplibre-gl-complex-text
+Render complex text with Harfbuzz in MapLibre GL JS through the RTL plugin hook. Supported scripts include Devanagari and Khmer.
 
 ## Usage
 
-You can use the MapLibre GL Devanagari Text plugin in the same way you use the mapbox-gl-rtl-text plugin:
+You can use the MapLibre GL Complex Text plugin in the same way you use the mapbox-gl-rtl-text plugin:
 
 ```html
 <div id="map"></div>
 <script>
 maplibregl.setRTLTextPlugin(
-    'https://wipfli.github.io/maplibre-gl-devanagari-text/dist/maplibre-gl-devanagari-text.js',
+    'https://wipfli.github.io/maplibre-gl-complex-text/dist/maplibre-gl-complex-text.js',
     false
 );
 
@@ -21,14 +21,32 @@ const map = new maplibregl.Map({
     hash: "map"
 });
 
+map.setTransformRequest((url, resourceType) => {
+  
+    const fontName = "NotoSansKhmer-Regular-v1";
+    // const fontName = "NotoSansDevanagari-Regular-v1";
+
+    if (resourceType === "Glyphs") {
+        const match = url.match(/(\d+)-(\d+)\.pbf$/);
+        if (match) {
+            const start = parseInt(match[1], 10);
+            const end = parseInt(match[2], 10);
+            if (start >= 57344 && end <= 63743 && (end - start === 255)) {
+                return { url: `https://wipfli.github.io/pgf-glyph-ranges/font/${fontName}/${start}-${end}.pbf` };
+            }
+        }
+    }
+    return undefined;
+});
+
 </script>
 ```
 
 ## Demo
 
-https://wipfli.github.io/maplibre-gl-devanagari-text/
+https://wipfli.github.io/maplibre-gl-complex-text/
 
-<a href="https://wipfli.github.io/maplibre-gl-devanagari-text/">
+<a href="https://wipfli.github.io/maplibre-gl-complex-text/">
 <img src="screenshot.png" width=300 />
 </a>
 
@@ -61,10 +79,9 @@ This should generate a `src/my-font-without-glyf.ttf.base64.txt` file.
 
 ## Limitations
 
-- Only works with the fonts provided in the `font` folder. They are copied from https://github.com/wipfli/positioned-glyph-font.
+- Only supports Devanagari and Khmer scripts currently.
+- Only works with one complex script at a time.
 - You cannot use the normal RTL plugin for Arabic and Hebrew when using the Devanagari plugin.
-- `text-field`s that use a `format` expression are not yet supported.
-- Only works with MapLibre GL JS <= v3.6.1 (smaller than or equal 3.6.1).
 
 ## License
 
@@ -72,5 +89,6 @@ This should generate a `src/my-font-without-glyf.ttf.base64.txt` file.
 - The harfbuzzjs files are copied from https://github.com/harfbuzz/harfbuzzjs and are published under the apache license:
   - `src/hbjs.js`
   - `src/hb.wasm` 
-- The font file `src/NotoSansDevanagari-Regular.ttf` is published under the [Open Font License](https://en.wikipedia.org/wiki/SIL_Open_Font_License).
-- The `src/encoding.csv` file is copied from https://github.com/wipfli/positioned-glyph-font and is licensed under the MIT license.
+- The font files `src/*.ttf` are published under the [Open Font License](https://en.wikipedia.org/wiki/SIL_Open_Font_License).
+- The `src/*.csv` files are copied from https://github.com/wipfli/positioned-glyph-font and are licensed under the MIT license.
+- Uses the api defined by the [Mapbox RTL Plugin](https://github.com/mapbox/mapbox-gl-rtl-text/), see [License](https://github.com/mapbox/mapbox-gl-rtl-text/blob/main/LICENSE.md).
