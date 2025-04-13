@@ -2,8 +2,8 @@
 Render complex text with Harfbuzz in MapLibre GL JS through the RTL plugin hook.
 
 Supported scripts include: 
-- Devanagari
-- Khmer
+- Devanagari ([Demo](https://wipfli.github.io/maplibre-gl-complex-text/devanagari.html))
+- Khmer ([Demo](https://wipfli.github.io/maplibre-gl-complex-text/khmer.html))
 
 ## Usage
 
@@ -46,12 +46,22 @@ map.setTransformRequest((url, resourceType) => {
 </script>
 ```
 
-## Demo
+## Demos
 
-https://wipfli.github.io/maplibre-gl-complex-text/
+### Devanagari
 
-<a href="https://wipfli.github.io/maplibre-gl-complex-text/">
-<img src="screenshot.png" width=300 />
+https://wipfli.github.io/maplibre-gl-complex-text/devanagari.html
+
+<a href="https://wipfli.github.io/maplibre-gl-complex-text/devanagari.html">
+<img src="screenshot-devanagari.png" width=350 />
+</a>
+
+### Khmer
+
+https://wipfli.github.io/maplibre-gl-complex-text/khmer.html
+
+<a href="https://wipfli.github.io/maplibre-gl-complex-text/khmer.html">
+<img src="screenshot-khmer.png" width=350 />
 </a>
 
 ## Build
