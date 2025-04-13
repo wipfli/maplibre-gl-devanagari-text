@@ -13,7 +13,7 @@ var encodings = {};
 
 function addFont(script, base64Font) {
     const binaryString = atob(base64Font);
-    
+
     const fontBlob = new Uint8Array(binaryString.length);
     for (let i = 0; i < binaryString.length; i++) {
         fontBlob[i] = binaryString.charCodeAt(i);
@@ -43,7 +43,7 @@ async function prepare() {
 
     addFont('khmer', base64FontKhmer);
     addEncoding('khmer', encodingCSVKhmer);
-    
+
     self.registerRTLTextPlugin({
         'applyArabicShaping': applyArabicShaping,
         'processBidirectionalText': processBidirectionalText,
@@ -55,8 +55,8 @@ prepare();
 
 function getCodepoint(positionedGlyph, script) {
     const index = positionedGlyph['g'];
-    const x_offset  = Math.round(positionedGlyph['dx'] / 64);
-    const y_offset  = Math.round(positionedGlyph['dy'] / 64);
+    const x_offset = Math.round(positionedGlyph['dx'] / 64);
+    const y_offset = Math.round(positionedGlyph['dy'] / 64);
     const x_advance = Math.round(positionedGlyph['ax'] / 64);
     const y_advance = Math.round(positionedGlyph['ay'] / 64);
 
@@ -88,7 +88,7 @@ function shape(text, script) {
     var buffer = hb.createBuffer();
     buffer.addText(text);
     buffer.guessSegmentProperties();
-    hb.shape(fonts[script], buffer); 
+    hb.shape(fonts[script], buffer);
 
     return buffer.json(fonts[script]);
 }
@@ -140,18 +140,74 @@ function applyArabicShaping(input) {
 }
 
 function processBidirectionalText(input, lineBreakPoints) {
-    let result = [];
-    let start = 0;
-    for (let i = 0; i < lineBreakPoints.length; i++) {
-        let end = lineBreakPoints[i];
-        result.push(input.slice(start, end));
-        start = end;
+    if (!input || input.length === 0) {
+        return [input];
     }
-    result.push(input.slice(start));
-    return result;
+
+    if (!lineBreakPoints || lineBreakPoints.length === 0) {
+        return [input];
+    }
+    
+    const lines = [];
+    let startIndex = 0;
+    
+    for (const breakPoint of lineBreakPoints) {
+        const line = input.substring(startIndex, breakPoint);
+        lines.push(line);
+        startIndex = breakPoint;
+    }
+    
+    if (startIndex < input.length) {
+        lines.push(input.substring(startIndex));
+    }
+    
+    return lines;
 }
 
 function processStyledBidirectionalText(text, styleIndices, lineBreakPoints) {
-    console.log('Error: processStyledBidirectionalText is not implemented.');
-    return null;
+
+    if (!text || text.length === 0) return [];
+    if (styleIndices.length !== text.length) {
+        throw new Error('styleIndices must have the same length as text');
+    }
+
+    const sortedBreakPoints = [...lineBreakPoints].sort((a, b) => a - b);
+    if (!sortedBreakPoints.includes(text.length)) {
+        sortedBreakPoints.push(text.length);
+    }
+
+    const result = [];
+    let startIndex = 0;
+
+    for (const breakPoint of sortedBreakPoints) {
+        if (breakPoint <= startIndex) continue;
+
+        const lineText = text.substring(startIndex, breakPoint);
+        const lineStyles = styleIndices.slice(startIndex, breakPoint);
+
+        let segmentStart = 0;
+        let currentStyle = lineStyles[0];
+
+        for (let i = 1; i < lineText.length; i++) {
+            if (lineStyles[i] !== currentStyle) {
+                const textValue = lineText.substring(segmentStart, i);
+                result.push([
+                    textValue,
+                    Array(textValue.length).fill(currentStyle)
+                ]);
+                segmentStart = i;
+                currentStyle = lineStyles[i];
+            }
+        }
+
+        const textValue = lineText.substring(segmentStart);
+        result.push([
+            textValue,
+            Array(textValue.length).fill(currentStyle)
+        ]);
+
+        startIndex = breakPoint;
+    }
+
+    return result;
 }
