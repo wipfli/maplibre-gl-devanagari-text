@@ -1,7 +1,11 @@
 import wasmModule from './hb.wasm';
 import hbjs from './hbjs.js';
+
 import base64FontDevanagari from './NotoSansDevanagari-Regular-without-glyf.ttf.base64.txt';
 import encodingCSVDevanagari from './NotoSansDevanagari-Regular-v1.csv';
+
+import base64FontKhmer from './NotoSansKhmer-Regular-without-glyf.ttf.base64.txt';
+import encodingCSVKhmer from './NotoSansKhmer-Regular-v1.csv';
 
 var hb = null;
 var fonts = {};
@@ -36,6 +40,9 @@ async function prepare() {
 
     addFont('devanagari', base64FontDevanagari);
     addEncoding('devanagari', encodingCSVDevanagari);
+
+    addFont('khmer', base64FontKhmer);
+    addEncoding('khmer', encodingCSVKhmer);
     
     self.registerRTLTextPlugin({
         'applyArabicShaping': applyArabicShaping,
@@ -122,9 +129,9 @@ function applyArabicShaping(input) {
         if (isDevanagari(part)) {
             result += encode(part, 'devanagari');
         }
-        // else if (isKhmer(part)) {
-        //     result += encode(part, 'khmer');
-        // }
+        else if (isKhmer(part)) {
+            result += encode(part, 'khmer');
+        }
         else {
             result += part;
         }
