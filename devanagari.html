@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css" />
+    <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #map {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+
+        maplibregl.setRTLTextPlugin(
+            "https://wipfli.github.io/maplibre-gl-complex-text/dist/maplibre-gl-complex-text.js",
+            false
+        );
+
+        const map = new maplibregl.Map({
+            container: "map",
+            style: "https://demotiles.maplibre.org/style.json",
+            center: [77.2090, 28.6139],
+            zoom: 4,
+            hash: "map"
+        });
+
+        map.setTransformRequest((url, resourceType) => {
+
+            // const fontName = "NotoSansKhmer-Regular-v1";
+            const fontName = "NotoSansDevanagari-Regular-v1";
+
+            if (resourceType === "Glyphs") {
+                const match = url.match(/(\d+)-(\d+)\.pbf$/);
+                if (match) {
+                    const start = parseInt(match[1], 10);
+                    const end = parseInt(match[2], 10);
+                    if (start >= 57344 && end <= 63743 && (end - start === 255)) {
+                        return { url: `https://wipfli.github.io/pgf-glyph-ranges/font/${fontName}/${start}-${end}.pbf` };
+                    }
+                }
+            }
+            return undefined;
+        });
+
+        map.on("load", function () {
+            map.addSource("label", {
+                type: "geojson",
+                data: {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [77.2090, 28.6139]
+                    },
+                    "properties": {
+                        "name:en": "New Delhi",
+                        "name": "नई दिल्ली"
+                    }
+                }
+            });
+            map.addLayer({
+                id: "label",
+                type: "symbol",
+                source: "label",
+                layout: {
+                    "text-field": [
+                        "format",
+                        ["get", "name"], {},
+                        ["get", "name:en"], {}
+                    ],
+                    "text-size": 24
+                },
+                paint: {
+                    "text-halo-color": "white",
+                    "text-halo-width": 2
+                }
+            })
+        });
+    </script>
+</body>
+
+</html>
