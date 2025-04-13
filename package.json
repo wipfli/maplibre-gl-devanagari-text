@@ -1,14 +1,14 @@
 {
-  "name": "maplibre-gl-devanagari-text",
-  "version": "1.0.0",
+  "name": "maplibre-gl-complex-text",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build-dev": "webpack",
     "build": "webpack --mode production"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Oliver Wipfli",
+  "license": "MIT",
   "devDependencies": {
     "raw-loader": "^4.0.2",
     "wasm-loader": "^1.3.0",

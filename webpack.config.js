@@ -2,9 +2,9 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/maplibre-gl-devanagari-text.js',
+  entry: './src/maplibre-gl-complex-text.js',
   output: {
-    filename: 'maplibre-gl-devanagari-text.js',
+    filename: 'maplibre-gl-complex-text.js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {

@@ -1,5 +1,9 @@
 # maplibre-gl-complex-text
-Render complex text with Harfbuzz in MapLibre GL JS through the RTL plugin hook. Supported scripts include Devanagari and Khmer.
+Render complex text with Harfbuzz in MapLibre GL JS through the RTL plugin hook.
+
+Supported scripts include: 
+- Devanagari
+- Khmer
 
 ## Usage
 
@@ -22,7 +26,7 @@ const map = new maplibregl.Map({
 });
 
 map.setTransformRequest((url, resourceType) => {
-  
+
     const fontName = "NotoSansKhmer-Regular-v1";
     // const fontName = "NotoSansDevanagari-Regular-v1";
 
@@ -79,7 +83,6 @@ This should generate a `src/my-font-without-glyf.ttf.base64.txt` file.
 
 ## Limitations
 
-- Only supports Devanagari and Khmer scripts currently.
 - Only works with one complex script at a time.
 - You cannot use the normal RTL plugin for Arabic and Hebrew when using the Devanagari plugin.
 
