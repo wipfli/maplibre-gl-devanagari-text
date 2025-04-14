@@ -25,7 +25,7 @@ https://wipfli.github.io/maplibre-gl-complex-text/
 
 ## Usage
 
-You can use the MapLibre GL Complex Text plugin in the same way you use the mapbox-gl-rtl-text plugin:
+You can use the MapLibre GL Complex Text plugin in the same way you use the mapbox-gl-rtl-text plugin, just need to add a special `transformRequest` at the end:
 
 ```html
 <div id="map"></div>
