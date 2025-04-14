@@ -20,7 +20,7 @@ Supported scripts:
 https://wipfli.github.io/maplibre-gl-complex-text/
 
 <a href="https://wipfli.github.io/maplibre-gl-complex-text/">
-<img src="screenshot.png" width=500 />
+<img src="screenshot.png" />
 </a>
 
 ## Usage
