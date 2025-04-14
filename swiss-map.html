@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .language-select {
+            font-family: sans-serif;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1;
+            background: white;
+            padding: 5px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div class="language-select">
+        <label for="language">Language:</label>
+        <select id="language">
+            <option value="name:hi">Devanagari (Hindi)</option>
+            <option value="name:gu">Gujarati</option>
+            <option value="name:pa">Gurmukhi (Punjabi)</option>
+            <option value="name:kn">Kannada</option>
+            <option value="name:km">Khmer</option>
+            <option value="name:ml">Malayalam</option>
+            <option value="name:my">Myanmar</option>
+            <option value="name:or">Oriya</option>
+            <option value="name:ta">Tamil</option>
+            <option value="name:te">Telugu</option>
+        </select>
+    </div>
+
+    <script>
+        maplibregl.setRTLTextPlugin(
+            "https://wipfli.github.io/maplibre-gl-complex-text/dist/maplibre-gl-complex-text.js",
+            false
+        );
+
+        const map = new maplibregl.Map({
+            container: 'map',
+            style: 'style-swiss-map.json',
+            center: [83.28, 24.13],
+            zoom: 4,
+            hash: 'map'
+        });
+
+        map.setTransformRequest((url, resourceType) => {
+            if (resourceType === "Glyphs") {
+                const match = url.match(/(\d+)-(\d+)\.pbf$/);
+                if (match) {
+                    const start = parseInt(match[1], 10);
+                    const end = parseInt(match[2], 10);
+                    const encodedRangeStarts = [63488, 63232, 62976, 62720, 62464, 62208, 61952, 61696, 61440, 61184, 60928, 60672, 60416, 60160, 59904, 59648, 59392, 59136, 58880, 58624, 58368, 58112, 57856, 57600, 3072, 2816, 2560, 2304, 10240, 10752];
+                    if (encodedRangeStarts.includes(start)) {
+                        return { url: `https://wipfli.github.io/pgf-glyph-ranges/font/NotoSansMultiscript-Regular-v1/${start}-${end}.pbf` };
+                    }
+                }
+            }
+            return undefined;
+        });
+
+        function getUrlParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function updateUrlParam(key, value) {
+            const url = new URL(window.location);
+            url.searchParams.set(key, value);
+            window.history.replaceState({}, '', url);
+        }
+        const langDropdown = document.getElementById('language');
+
+        function updateLanguageField(langField) {
+            const layerId = "labels";
+            if (!map.getLayer(layerId)) return;
+            map.setLayoutProperty(layerId, 'text-field', [
+                "format",
+                ["get", "name:en"], {},
+                "\n", {},
+                ['get', langField], {}
+            ]);
+            updateUrlParam('lang', langField);
+        }
+
+        langDropdown.addEventListener('change', (e) => {
+            updateLanguageField(e.target.value);
+        });
+
+        map.on('load', () => {
+            const urlLang = getUrlParam('lang') || 'name:hi';
+            langDropdown.value = urlLang;
+            updateLanguageField(urlLang);
+        });
+    </script>
+</body>
+
+</html>

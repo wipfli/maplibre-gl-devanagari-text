@@ -23,6 +23,16 @@ https://wipfli.github.io/maplibre-gl-complex-text/
 <img src="screenshot.png" />
 </a>
 
+### Swiss Map
+
+Language selector available here:
+
+https://wipfli.github.io/maplibre-gl-complex-text/swiss-map
+
+<a href="https://wipfli.github.io/maplibre-gl-complex-text/swiss-map">
+<img src="swiss-map.png" />
+</a>
+
 ## Usage
 
 You can use the MapLibre GL Complex Text plugin in the same way you use the mapbox-gl-rtl-text plugin, just need to add a special `transformRequest` at the end:
