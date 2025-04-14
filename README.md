@@ -89,8 +89,10 @@ This should generate a `src/my-font-without-glyf.ttf.base64.txt` file.
 
 ## Limitations
 
-- Only works with one complex script at a time.
 - You cannot use the normal RTL plugin for Arabic and Hebrew when using this plugin.
+- Line breaking might be a bit wrong in MapLibre `["format"]` expressions. 
+
+Bug reports welcome!
 
 ## License
 
