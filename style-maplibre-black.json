@@ -1,0 +1,109 @@
+{
+    "glyphs": "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+    "sprite": "https://protomaps.github.io/basemaps-assets/sprites/v4/black",
+    "layers": [
+        {
+            "id": "background",
+            "type": "background",
+            "paint": {
+                "background-color": "#333333"
+            }
+        },
+        {
+            "id": "countries-fill",
+            "type": "fill",
+            "paint": {
+                "fill-color": "#141414"
+            },
+            "source": "maplibre",
+            "source-layer": "countries"
+        },
+        {
+            "id": "countries-boundary",
+            "type": "line",
+            "paint": {
+                "line-color": "#707070",
+                "line-width": 0.7,
+                "line-dasharray": [
+                    "step",
+                    [
+                        "zoom"
+                    ],
+                    [
+                        "literal",
+                        [
+                            2
+                        ]
+                    ],
+                    4,
+                    [
+                        "literal",
+                        [
+                            2,
+                            1
+                        ]
+                    ]
+                ]
+            },
+            "source": "maplibre",
+            "source-layer": "countries"
+        },
+        {
+            "id": "countries-label",
+            "type": "symbol",
+            "paint": {
+                "text-color": "#707070",
+                "text-halo-color": "#141414",
+                "text-halo-width": 1
+            },
+            "layout": {
+                "text-transform": "uppercase",
+                "text-font": [
+                    "Open Sans Semibold"
+                ],
+                "text-size": {
+                    "stops": [
+                        [
+                            2,
+                            10
+                        ],
+                        [
+                            4,
+                            12
+                        ],
+                        [
+                            6,
+                            16
+                        ]
+                    ]
+                },
+                "text-field": {
+                    "stops": [
+                        [
+                            2,
+                            "{ABBREV}"
+                        ],
+                        [
+                            4,
+                            "{NAME}"
+                        ]
+                    ]
+                },
+                "text-max-width": 10
+            },
+            "source": "maplibre",
+            "source-layer": "centroids"
+        }
+    ],
+    "sources": {
+        "maplibre": {
+            "url": "https://demotiles.maplibre.org/tiles/tiles.json",
+            "type": "vector"
+        }
+    },
+    "version": 8,
+    "metadata": {
+        "maptiler:copyright": "This style was generated on MapTiler Cloud. Usage is governed by the license terms in https://github.com/maplibre/demotiles/blob/gh-pages/LICENSE",
+        "openmaptiles:version": "3.x"
+    }
+}

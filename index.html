@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css" />
+    <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #map {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+
+        maplibregl.setRTLTextPlugin(
+            "https://wipfli.github.io/maplibre-gl-complex-text/dist/maplibre-gl-complex-text.js",
+            false
+        );
+
+        const map = new maplibregl.Map({
+            container: "map",
+            style: "style-maplibre-black.json",
+            center: [87.2, 19.74],
+            zoom: 4.5,
+            hash: "map"
+        });
+
+        map.setTransformRequest((url, resourceType) => {
+            if (resourceType === "Glyphs") {
+                const match = url.match(/(\d+)-(\d+)\.pbf$/);
+                if (match) {
+                    const start = parseInt(match[1], 10);
+                    const end = parseInt(match[2], 10);
+                    const encodedRangeStarts = [63488, 63232, 62976, 62720, 62464, 62208, 61952, 61696, 61440, 61184, 60928, 60672, 60416, 60160, 59904, 59648, 59392, 59136, 58880, 58624, 58368, 58112, 57856, 57600, 3072, 2816, 2560, 2304, 10240, 10752];
+                    if (encodedRangeStarts.includes(start)) {
+                        return { url: `https://wipfli.github.io/pgf-glyph-ranges/font/NotoSansMultiscript-Regular-v1/${start}-${end}.pbf` };
+                    }
+                }
+            }
+            return undefined;
+        });
+
+        map.on("load", function () {
+            map.addSource("labels", {
+                type: "geojson",
+                data: {
+                    "type": "FeatureCollection",
+                    "features": [
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [96.1708, 21.9033]
+                            },
+                            "properties": {
+                                "name:en": "Mandalay",
+                                "name": "မန္တလေး",
+                                "script": "Myanmar"
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [85.8318, 20.2961]
+                            },
+                            "properties": {
+                                "name:en": "Bhubaneswar",
+                                "name": "ଭୁବନେଶ୍ୱର",
+                                "script": "Oriya"
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [103.8554, 13.3618]
+                            },
+                            "properties": {
+                                "name:en": "Siem Reap",
+                                "name": "ក្រុងសៀមរាប",
+                                "script": "Khmer"
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [77.5946, 12.9716]
+                            },
+                            "properties": {
+                                "name:en": "Bengaluru",
+                                "name": "ಬೆಂಗಳೂರು",
+                                "script": "Kannada"
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [74.86126, 31.62074]
+                            },
+                            "properties": {
+                                "name:en": "Amritsar",
+                                "name": "ਅੰਮ੍ਰਿਤਸਰ",
+                                "script": "Gurmukhi"
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [77.2090, 28.6139]
+                            },
+                            "properties": {
+                                "name:en": "New Delhi",
+                                "name": "नई दिल्ली",
+                                "script": "Devanagari"
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [72.8777, 19.0760]
+                            },
+                            "properties": {
+                                "name:en": "Mumbai",
+                                "name": "મુંબઈ",
+                                "script": "Gujarati"
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [78.4867, 17.3850]
+                            },
+                            "properties": {
+                                "name:en": "Hyderabad",
+                                "name": "హైదరాబాదు",
+                                "script": "Telugu"
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [76.2859, 9.9312]
+                            },
+                            "properties": {
+                                "name:en": "Kochi",
+                                "name": "കൊച്ചി",
+                                "script": "Malayalam"
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [90.4125, 23.8103]
+                            },
+                            "properties": {
+                                "name:en": "Dhaka",
+                                "name": "ঢাকা",
+                                "script": "Bengali"
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [80.2785, 13.0827]
+                            },
+                            "properties": {
+                                "name:en": "Chennai",
+                                "name": "சென்னை",
+                                "script": "Tamil"
+                            }
+                        }
+                    ]
+                }
+            });
+            map.addLayer({
+                id: "label",
+                type: "symbol",
+                source: "labels",
+                layout: {
+                    "text-field": [
+                        "format",
+                        ["get", "name:en"], {},
+                        "\n", {},
+                        ["get", "name"], {}
+                    ],
+                    "text-size": 24,
+                    "text-font": ["Noto Sans Regular"],
+                    "text-variable-anchor": ["bottom", "left", "right"],
+                    "text-radial-offset": 0.4,
+                    "text-justify": "auto",
+                    "icon-image": "townspot"
+                },
+                paint: {
+                    "text-color": "rgb(0, 255, 255)"
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

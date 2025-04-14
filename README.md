@@ -1,10 +1,27 @@
 # maplibre-gl-complex-text
 Render complex text with Harfbuzz in MapLibre GL JS through the RTL plugin hook.
 
-Supported scripts include: 
-- Khmer ([Demo](https://wipfli.github.io/maplibre-gl-complex-text/khmer.html))
-- Devanagari ([Demo](https://wipfli.github.io/maplibre-gl-complex-text/devanagari.html))
-- Myanmar ([Demo](https://wipfli.github.io/maplibre-gl-complex-text/myanmar.html))
+Supported scripts: 
+
+- Bengali
+- Devanagari
+- Gujarati
+- Gurmukhi
+- Kannada
+- Khmer
+- Malayalam
+- Myanmar
+- Oriya
+- Tamil
+- Telugu
+
+## Demo
+
+https://wipfli.github.io/maplibre-gl-complex-text/
+
+<a href="https://wipfli.github.io/maplibre-gl-complex-text/">
+<img src="screenshot.png" width=500 />
+</a>
 
 ## Usage
 
@@ -14,31 +31,26 @@ You can use the MapLibre GL Complex Text plugin in the same way you use the mapb
 <div id="map"></div>
 <script>
 maplibregl.setRTLTextPlugin(
-    'https://wipfli.github.io/maplibre-gl-complex-text/dist/maplibre-gl-complex-text.js',
+    "https://wipfli.github.io/maplibre-gl-complex-text/dist/maplibre-gl-complex-text.js",
     false
 );
 
 const map = new maplibregl.Map({
-    container: 'map',
-    style: 'style.json',
-    center: [80, 21],
-    zoom: 4,
-    hash: "map"
+    container: "map",
+    style: "style.json",
+    center: [96.1708, 21.9033],
+    zoom: 6
 });
 
 map.setTransformRequest((url, resourceType) => {
-
-    const fontName = "NotoSansKhmer-Regular-v1";
-    // const fontName = "NotoSansDevanagari-Regular-v1";
-    // const fontName = "NotoSansMyanmar-Regular-v1";
-
     if (resourceType === "Glyphs") {
         const match = url.match(/(\d+)-(\d+)\.pbf$/);
         if (match) {
             const start = parseInt(match[1], 10);
             const end = parseInt(match[2], 10);
-            if (start >= 57344 && end <= 63743 && (end - start === 255)) {
-                return { url: `https://wipfli.github.io/pgf-glyph-ranges/font/${fontName}/${start}-${end}.pbf` };
+            const encodedRangeStarts = [63488, 63232, 62976, 62720, 62464, 62208, 61952, 61696, 61440, 61184, 60928, 60672, 60416, 60160, 59904, 59648, 59392, 59136, 58880, 58624, 58368, 58112, 57856, 57600, 3072, 2816, 2560, 2304, 10240, 10752];
+            if (encodedRangeStarts.includes(start)) {
+                return { url: `https://wipfli.github.io/pgf-glyph-ranges/font/NotoSansMultiscript-Regular-v1/${start}-${end}.pbf` };
             }
         }
     }
@@ -47,32 +59,6 @@ map.setTransformRequest((url, resourceType) => {
 
 </script>
 ```
-
-## Demos
-
-### Khmer
-
-https://wipfli.github.io/maplibre-gl-complex-text/khmer.html
-
-<a href="https://wipfli.github.io/maplibre-gl-complex-text/khmer.html">
-<img src="screenshot-khmer.png" width=350 />
-</a>
-
-### Devanagari
-
-https://wipfli.github.io/maplibre-gl-complex-text/devanagari.html
-
-<a href="https://wipfli.github.io/maplibre-gl-complex-text/devanagari.html">
-<img src="screenshot-devanagari.png" width=350 />
-</a>
-
-### Myanmar
-
-https://wipfli.github.io/maplibre-gl-complex-text/myanmar.html
-
-<a href="https://wipfli.github.io/maplibre-gl-complex-text/myanmar.html">
-<img src="screenshot-myanmar.png" width=350 />
-</a>
 
 ## Build
 

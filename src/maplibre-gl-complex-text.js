@@ -2,13 +2,37 @@ import wasmModule from './hb.wasm';
 import hbjs from './hbjs.js';
 
 import base64FontDevanagari from './NotoSansDevanagari-Regular-without-glyf.ttf.base64.txt';
-import encodingCSVDevanagari from './NotoSansDevanagari-Regular-v1.csv';
+import encodingCSVDevanagari from './NotoSansDevanagari-Regular-v1.multiscript.csv';
 
 import base64FontKhmer from './NotoSansKhmer-Regular-without-glyf.ttf.base64.txt';
-import encodingCSVKhmer from './NotoSansKhmer-Regular-v1.csv';
+import encodingCSVKhmer from './NotoSansKhmer-Regular-v1.multiscript.csv';
 
 import base64FontMyanmar from './NotoSansMyanmar-Regular-without-glyf.ttf.base64.txt';
-import encodingCSVMyanmar from './NotoSansMyanmar-Regular-v1.csv';
+import encodingCSVMyanmar from './NotoSansMyanmar-Regular-v1.multiscript.csv';
+
+import base64FontKannada from './NotoSansKannada-Regular-without-glyf.ttf.base64.txt';
+import encodingCSVKannada from './NotoSansKannada-Regular-v1.multiscript.csv';
+
+import base64FontOriya from './NotoSansOriya-Regular-without-glyf.ttf.base64.txt';
+import encodingCSVOriya from './NotoSansOriya-Regular-v1.multiscript.csv';
+
+import base64FontGujarati from './NotoSansGujarati-Regular-without-glyf.ttf.base64.txt';
+import encodingCSVGujarati from './NotoSansGujarati-Regular-v1.multiscript.csv';
+
+import base64FontGurmukhi from './NotoSansGurmukhi-Regular-without-glyf.ttf.base64.txt';
+import encodingCSVGurmukhi from './NotoSansGurmukhi-Regular-v1.multiscript.csv';
+
+import base64FontBengali from './NotoSansBengali-Regular-without-glyf.ttf.base64.txt';
+import encodingCSVBengali from './NotoSansBengali-Regular-v1.multiscript.csv';
+
+import base64FontTelugu from './NotoSansTelugu-Regular-without-glyf.ttf.base64.txt';
+import encodingCSVTelugu from './NotoSansTelugu-Regular-v1.multiscript.csv';
+
+import base64FontTamil from './NotoSansTamil-Regular-without-glyf.ttf.base64.txt';
+import encodingCSVTamil from './NotoSansTamil-Regular-v1.multiscript.csv';
+
+import base64FontMalayalam from './NotoSansMalayalam-Regular-without-glyf.ttf.base64.txt';
+import encodingCSVMalayalam from './NotoSansMalayalam-Regular-v1.multiscript.csv';
 
 var hb = null;
 var fonts = {};
@@ -49,6 +73,30 @@ async function prepare() {
 
     addFont('myanmar', base64FontMyanmar);
     addEncoding('myanmar', encodingCSVMyanmar);
+
+    addFont('kannada', base64FontKannada);
+    addEncoding('kannada', encodingCSVKannada);
+
+    addFont('oriya', base64FontOriya);
+    addEncoding('oriya', encodingCSVOriya);
+
+    addFont('gujarati', base64FontGujarati);
+    addEncoding('gujarati', encodingCSVGujarati);
+
+    addFont('gurmukhi', base64FontGurmukhi);
+    addEncoding('gurmukhi', encodingCSVGurmukhi);
+
+    addFont('bengali', base64FontBengali);
+    addEncoding('bengali', encodingCSVBengali);
+
+    addFont('telugu', base64FontTelugu);
+    addEncoding('telugu', encodingCSVTelugu);
+
+    addFont('tamil', base64FontTamil);
+    addEncoding('tamil', encodingCSVTamil);
+
+    addFont('malayalam', base64FontMalayalam);
+    addEncoding('malayalam', encodingCSVMalayalam);
 
     self.registerRTLTextPlugin({
         'applyArabicShaping': applyArabicShaping,
@@ -111,7 +159,24 @@ function encode(text, script) {
 }
 
 function breakStringByScript(input) {
-    const regex = /(\p{Script=Devanagari}+|\p{Script=Khmer}+|\p{Script=Myanmar}+|[^\p{Script=Devanagari}\p{Script=Khmer}\p{Script=Myanmar}]+)/gu;
+    const scripts = [
+        'Devanagari', 
+        'Khmer',
+        'Myanmar',
+        'Kannada',
+        'Oriya',
+        'Gujarati',
+        'Gurmukhi',
+        'Bengali',
+        'Tamil',
+        'Telugu',
+        'Malayalam'
+    ];
+    const scriptPatterns = scripts.map(script => `\\p{Script=${script}}+`);
+    const negatedScripts = scripts.map(script => `\\p{Script=${script}}`).join('');
+    const otherPattern = `[^${negatedScripts}]+`;
+    const pattern = `(${[...scriptPatterns, otherPattern].join('|')})`;
+    const regex = new RegExp(pattern, 'gu');
     return input.match(regex);
 }
 
@@ -130,6 +195,46 @@ function isMyanmar(str) {
     return r.test(str);
 }
 
+function isKannada(str) {
+    const r = /^[\p{Script=Kannada}]+$/u;
+    return r.test(str);
+}
+
+function isOriya(str) {
+    const r = /^[\p{Script=Oriya}]+$/u;
+    return r.test(str);
+}
+
+function isGujarati(str) {
+    const r = /^[\p{Script=Gujarati}]+$/u;
+    return r.test(str);
+}
+
+function isGurmukhi(str) {
+    const r = /^[\p{Script=Gurmukhi}]+$/u;
+    return r.test(str);
+}
+
+function isBengali(str) {
+    const r = /^[\p{Script=Bengali}]+$/u;
+    return r.test(str);
+}
+
+function isTelugu(str) {
+    const r = /^[\p{Script=Telugu}]+$/u;
+    return r.test(str);
+}
+
+function isTamil(str) {
+    const r = /^[\p{Script=Tamil}]+$/u;
+    return r.test(str);
+}
+
+function isMalayalam(str) {
+    const r = /^[\p{Script=Malayalam}]+$/u;
+    return r.test(str);
+}
+
 function applyArabicShaping(input) {
     var result = '';
     var parts = breakStringByScript(input);
@@ -145,6 +250,30 @@ function applyArabicShaping(input) {
         }
         else if (isMyanmar(part)) {
             result += encode(part, 'myanmar');
+        }
+        else if (isKannada(part)) {
+            result += encode(part, 'kannada');
+        }
+        else if (isOriya(part)) {
+            result += encode(part, 'oriya');
+        }
+        else if (isGujarati(part)) {
+            result += encode(part, 'gujarati');
+        }
+        else if (isGurmukhi(part)) {
+            result += encode(part, 'gurmukhi');
+        }
+        else if (isBengali(part)) {
+            result += encode(part, 'bengali');
+        }
+        else if (isTelugu(part)) {
+            result += encode(part, 'telugu');
+        }
+        else if (isTamil(part)) {
+            result += encode(part, 'tamil');
+        }
+        else if (isMalayalam(part)) {
+            result += encode(part, 'malayalam');
         }
         else {
             result += part;
