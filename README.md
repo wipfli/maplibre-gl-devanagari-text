@@ -27,9 +27,7 @@ https://wipfli.github.io/maplibre-gl-complex-text/
 
 You can use the MapLibre GL Complex Text plugin in the same way you use the mapbox-gl-rtl-text plugin, just need to add a special `transformRequest` at the end:
 
-```html
-<div id="map"></div>
-<script>
+```javascript
 maplibregl.setRTLTextPlugin(
     "https://wipfli.github.io/maplibre-gl-complex-text/dist/maplibre-gl-complex-text.js",
     false
@@ -56,8 +54,6 @@ map.setTransformRequest((url, resourceType) => {
     }
     return undefined;
 });
-
-</script>
 ```
 
 ## Build
