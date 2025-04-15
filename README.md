@@ -88,5 +88,5 @@ Bug reports welcome!
   - `src/hbjs.js`
   - `src/hb.wasm` 
 - The font files `src/*.ttf` are published under the [Open Font License](https://en.wikipedia.org/wiki/SIL_Open_Font_License).
-- The `src/*.csv` files are copied from https://github.com/wipfli/positioned-glyph-font and are licensed under the MIT license.
+- The `src/*.csv` files are copied from https://github.com/wipfli/pgf-encoding and are licensed under the MIT license.
 - Uses the api defined by the [Mapbox RTL Plugin](https://github.com/mapbox/mapbox-gl-rtl-text/), see [License](https://github.com/mapbox/mapbox-gl-rtl-text/blob/main/LICENSE.md).
